@@ -27,7 +27,7 @@ Inside the "frontend" folder:
 
 The database includes property transactions from 4 London outcodes: "E1", "E2", "E10", "E11". There are 2 tables, one contains a list of properties, and the other contains a list of transactions. These tables are linked, and this relationship is also already setup in the Bookshelf models.
 
-*Please create a simple interface so a user can search for property transactions and display them.*
+**Please create a simple interface so a user can search for property transactions and display them.**
 
 It should:
 - Accept a property ID, postcode or street
