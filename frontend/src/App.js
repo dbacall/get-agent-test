@@ -27,7 +27,12 @@ function App() {
   const findProperties = async (e) => {
     e.preventDefault();
 
-    const resp = await fetch(`/lrProperty/${searchQuery}`);
+    let path = '';
+
+    if (searchType === 'property id') path = searchQuery;
+    if (searchType === 'street') path = `street/${searchQuery}`;
+
+    const resp = await fetch(`/lrProperty/${path}`);
     const json = await resp.json();
     console.log('response', json);
 
@@ -63,7 +68,7 @@ function App() {
           className="mb-2 mr-sm-2"
           placeholder={`Search by ${searchType}`}
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => setSearchQuery(e.target.value.toUpperCase())}
         />
         <Button type="submit" className="mb-2">
           Search
