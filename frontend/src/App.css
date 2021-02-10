@@ -13,6 +13,10 @@
   color: white;
 }
 
+.search-options {
+  margin-top: 25px;
+}
+
 .search {
   margin: 20px auto;
   display: flex;
