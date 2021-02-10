@@ -16,6 +16,8 @@ function App() {
   const findProperties = async (e) => {
     e.preventDefault();
     setError('');
+    setPropertiesIndex(10);
+    setPropertiesToDisplay([]);
 
     let path = '';
 
