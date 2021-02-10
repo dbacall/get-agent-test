@@ -30,7 +30,7 @@ router
       .where({ street })
       .fetchAll({ withRelated: ['lrTransactions'], require: false });
 
-    if (!ctx.lrProperties) {
+    if (ctx.lrProperties.length === 0) {
       ctx.status = 404;
       return (ctx.body = { error: true, msg: 'LRProperties not found' });
     }
@@ -50,7 +50,7 @@ router
       .where({ outcode })
       .fetchAll({ withRelated: ['lrTransactions'], require: false });
 
-    if (!ctx.lrProperties) {
+    if (ctx.lrProperties.length === 0) {
       ctx.status = 404;
       return (ctx.body = { error: true, msg: 'LRProperties not found' });
     }
