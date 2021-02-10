@@ -16,12 +16,11 @@ function App() {
     let path = '';
 
     if (searchType === 'property id') path = searchQuery;
-    if (searchType === 'postcode') path = `postcode/${getOutcode(searchQuery)}`;
+    if (searchType === 'postcode') path = `outcode/${getOutcode(searchQuery)}`;
     if (searchType === 'street') path = `street/${searchQuery}`;
 
     const resp = await fetch(`/lrProperty/${path}`);
     const json = await resp.json();
-    console.log('response', json);
 
     if (json.success) {
       setPropertyData(json.lrProperty);
@@ -32,8 +31,8 @@ function App() {
   const getOutcode = (postcode) => {
     return postcode
       .split(' ')
-      .join()
-      .substring(0, postcode.length - 3);
+      .join('')
+      .substring(0, postcode.length - 4);
   };
 
   const handleSearchOption = (e) => {
