@@ -3,6 +3,8 @@ const router = new Router();
 
 const lrProperty = require('./models/lrProperty.js');
 
+router.prefix('/lrProperty');
+
 router
   .param('lrPropertyId', async (id, ctx, next) => {
     ctx.lrProperty = await new lrProperty({ id }).fetch({
@@ -17,10 +19,7 @@ router
 
     return next();
   })
-  .get('/', async (ctx, next) => {
-    return (ctx.body = "I'm alive!");
-  })
-  .get('/lrProperty/:lrPropertyId', async (ctx, next) => {
+  .get('/:lrPropertyId', async (ctx, next) => {
     return (ctx.body = { success: true, lrProperty: ctx.lrProperty.toJSON() });
   });
 
@@ -37,7 +36,7 @@ router
 
     return next();
   })
-  .get('/lrProperty/street/:lrPropertyStreet', async (ctx, next) => {
+  .get('/street/:lrPropertyStreet', async (ctx, next) => {
     return (ctx.body = {
       success: true,
       lrProperty: ctx.lrProperties.toJSON(),
@@ -57,7 +56,7 @@ router
 
     return next();
   })
-  .get('/lrProperty/outcode/:lrPropertyOutcode', async (ctx, next) => {
+  .get('/outcode/:lrPropertyOutcode', async (ctx, next) => {
     return (ctx.body = {
       success: true,
       lrProperty: ctx.lrProperties.toJSON(),
