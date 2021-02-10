@@ -9,9 +9,11 @@ function App() {
   const [propertyData, setPropertyData] = useState(null);
   const [searchType, setSearchType] = useState('property id');
   const [searchQuery, setSearchQuery] = useState('');
+  const [error, setError] = useState('');
 
   const findProperties = async (e) => {
     e.preventDefault();
+    setError('');
 
     let path = '';
 
@@ -25,6 +27,8 @@ function App() {
     if (json.success) {
       setPropertyData(json.lrProperty);
       setSearchQuery('');
+    } else {
+      setError('No properties found.');
     }
   };
 
@@ -73,6 +77,13 @@ function App() {
   };
 
   const renderPropertyDetails = () => {
+    if (error) {
+      return (
+        <div>
+          <h3>{error}</h3>
+        </div>
+      );
+    }
     if (propertyData) {
       if (Array.isArray(propertyData)) {
         return propertyData.map((property, index) => {
