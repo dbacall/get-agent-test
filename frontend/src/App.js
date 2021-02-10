@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -10,6 +10,8 @@ function App() {
   const [searchType, setSearchType] = useState('property id');
   const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState('');
+  const [propertiesToDisplay, setPropertiesToDisplay] = useState([]);
+  const [propertiesIndex, setPropertiesIndex] = useState(10);
 
   const findProperties = async (e) => {
     e.preventDefault();
@@ -62,19 +64,25 @@ function App() {
 
   const renderSearchBar = () => {
     return (
-      <Form inline onSubmit={findProperties}>
+      <Form inline onSubmit={findProperties} className="se">
         <Form.Control
           className="mb-2 mr-sm-2"
           placeholder={`Search by ${searchType}`}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value.toUpperCase())}
         />
-        <Button type="submit" className="mb-2">
+        <Button type="submit" className="mb-2 search-btn">
           Search
         </Button>
       </Form>
     );
   };
+
+  useEffect(() => {
+    if (Array.isArray(propertyData)) {
+      setPropertiesToDisplay(propertyData.slice(0, propertiesIndex));
+    }
+  }, [propertyData, propertiesIndex]);
 
   const renderPropertyDetails = () => {
     if (error) {
@@ -86,7 +94,7 @@ function App() {
     }
     if (propertyData) {
       if (Array.isArray(propertyData)) {
-        return propertyData.map((property, index) => {
+        return propertiesToDisplay.map((property, index) => {
           const {
             outcode,
             incode,
@@ -124,7 +132,7 @@ function App() {
         return (
           <div className="property-details">
             <h5>
-              {paon}, {saon}, {street}, {outcode} {incode}
+              {paon}, {saon ? `${saon}, ` : null} {street}, {outcode} {incode}
             </h5>
             <h6>Transaction History</h6>
             {lrTransactions.map((transaction, index) => {
@@ -140,6 +148,16 @@ function App() {
     }
   };
 
+  const renderShowMoreButton = () => {
+    if (propertiesToDisplay.length > 0) {
+      return (
+        <Button onClick={() => setPropertiesIndex(propertiesIndex + 10)}>
+          Show More
+        </Button>
+      );
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -151,6 +169,7 @@ function App() {
       </div>
       <div className="search">{renderSearchBar()}</div>
       <div className="properties-container">{renderPropertyDetails()}</div>
+      <div className="show-more-btn">{renderShowMoreButton()}</div>
     </div>
   );
 }

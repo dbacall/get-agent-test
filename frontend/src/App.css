@@ -24,6 +24,10 @@
   align-items: center;
 }
 
+.search-btn {
+  margin: auto;
+}
+
 .properties-container {
   width: 95%;
   margin: auto;
@@ -43,4 +47,8 @@
 
 .transaction:not(:last-child) {
   margin-bottom: 10px;
+}
+
+.show-more-btn {
+  margin: 20px;
 }
