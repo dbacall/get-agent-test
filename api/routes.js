@@ -5,7 +5,7 @@ const lrProperty = require('./models/lrProperty.js');
 
 router
   .param('lrPropertyId', async (id, ctx, next) => {
-    ctx.lrProperty = await new lrProperty({ id: id }).fetch({
+    ctx.lrProperty = await new lrProperty({ id }).fetch({
       withRelated: ['lrTransactions'],
       require: false,
     });
@@ -27,7 +27,7 @@ router
 router
   .param('lrPropertyStreet', async (street, ctx, next) => {
     ctx.lrProperties = await new lrProperty()
-      .where({ street: street })
+      .where({ street })
       .fetchAll({ withRelated: ['lrTransactions'], require: false });
 
     if (!ctx.lrProperties) {
@@ -38,6 +38,26 @@ router
     return next();
   })
   .get('/lrProperty/street/:lrPropertyStreet', async (ctx, next) => {
+    return (ctx.body = {
+      success: true,
+      lrProperty: ctx.lrProperties.toJSON(),
+    });
+  });
+
+router
+  .param('lrPropertyOutcode', async (outcode, ctx, next) => {
+    ctx.lrProperties = await new lrProperty()
+      .where({ outcode })
+      .fetchAll({ withRelated: ['lrTransactions'], require: false });
+
+    if (!ctx.lrProperties) {
+      ctx.status = 404;
+      return (ctx.body = { error: true, msg: 'LRProperties not found' });
+    }
+
+    return next();
+  })
+  .get('/lrProperty/outcode/:lrPropertyOutcode', async (ctx, next) => {
     return (ctx.body = {
       success: true,
       lrProperty: ctx.lrProperties.toJSON(),
