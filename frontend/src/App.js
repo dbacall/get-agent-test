@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 function App() {
   /* This is example of how to fetch data from API */
@@ -61,17 +62,18 @@ function App() {
         lrTransactions,
       } = propertyData;
       return (
-        <div>
-          <h6>
+        <div className="property-details">
+          <h5>
             {paon}, {saon}, {street}, {outcode} {incode}
-          </h6>
+          </h5>
+          <h6>Transaction History</h6>
           {lrTransactions.map((transaction, index) => {
             return (
-              <div key={index}>
-                <p>
-                  {transaction.date} - £{transaction.price}
-                </p>
-              </div>
+              <p key={index} className="transaction">
+                {/* <p> */}
+                {transaction.date} - £{transaction.price}
+                {/* </p> */}
+              </p>
             );
           })}
         </div>
@@ -82,10 +84,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1 className="title">GetAgent Search</h1>
+        <h1>GetAgent Search</h1>
       </header>
-      <div>{renderSearchBar()}</div>
-      <div>{renderPropertyDetails()}</div>
+      <div className="search">{renderSearchBar()}</div>
+      <div className="properties-container">{renderPropertyDetails()}</div>
     </div>
   );
 }
