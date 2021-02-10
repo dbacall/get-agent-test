@@ -38,6 +38,10 @@
   padding: 20px;
 }
 
+.property-details:not(:first-child) {
+  border-top: none;
+}
+
 .transaction {
   margin-bottom: 0;
   display: flex;
