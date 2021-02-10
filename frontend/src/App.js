@@ -85,9 +85,10 @@ function App() {
             lrTransactions,
           } = property;
           return (
-            <div className="property-details">
+            <div className="property-details" key={index}>
               <h5>
-                {paon}, {saon}, {street}, {outcode} {incode}
+                {paon}, {saon ? `${saon}, ` : null}
+                {street}, {outcode} {incode}
               </h5>
               <h6>Transaction History</h6>
               {lrTransactions.map((transaction, index) => {
